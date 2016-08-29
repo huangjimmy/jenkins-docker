@@ -11,4 +11,5 @@ USER ${user}
 
 COPY id_rsa /var/jenkins_home/.ssh/
 COPY id_rsa.pub /var/jenkins_home/.ssh/
-RUN cat /var/jenkins_home/.ssh/id_rsa.pub > /var/jenkins_home/.ssh/authorized_keys && chmod 400 /var/jenkins_home/.ssh/id_rsa
+COPY id_rsa.pub  /var/jenkins_home/.ssh/authorized_keys 
+RUN chmod 400 /var/jenkins_home/.ssh/id_rsa

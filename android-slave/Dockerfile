@@ -19,4 +19,5 @@ USER ${user}
 
 COPY id_rsa ${JENKINS_USER_HOME}/.ssh/
 COPY id_rsa.pub ${JENKINS_USER_HOME}/.ssh/
-RUN cat ${JENKINS_USER_HOME}/.ssh/id_rsa.pub > ${JENKINS_USER_HOME}/.ssh/authorized_keys && chmod 400 ${JENKINS_USER_HOME}/.ssh/id_rsa
+COPY id_rsa.pub ${JENKINS_USER_HOME}/.ssh/authorized_keys
+RUN chmod 400 ${JENKINS_USER_HOME}/.ssh/id_rsa
