@@ -22,4 +22,4 @@ RUN chmod 400 ${JENKINS_USER_HOME}/.ssh/id_rsa
 
 RUN chown -R ${user} "${JENKINS_HOME}" &&  mkdir -p "${JENKINS_USER_HOME}" && chown -R ${user}  "${JENKINS_USER_HOME}"
 
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/bin/bash", " while 1"]
