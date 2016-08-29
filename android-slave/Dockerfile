@@ -15,9 +15,9 @@ ARG gid=1000
 RUN groupadd -g ${gid} ${group} \
     && useradd -d "$JENKINS_HOME" -u ${uid} -g ${gid} -m -s /bin/bash ${user}
 
-USER ${user}
-
 COPY id_rsa ${JENKINS_USER_HOME}/.ssh/
 COPY id_rsa.pub ${JENKINS_USER_HOME}/.ssh/
 COPY id_rsa.pub ${JENKINS_USER_HOME}/.ssh/authorized_keys
 RUN chmod 400 ${JENKINS_USER_HOME}/.ssh/id_rsa
+
+RUN chown -R ${user} "$JENKINS_HOME" && chown -R ${user} /usr/share/jenkins/ref && mkdir -p "$JENKINS_USER_HOME" && chown -R ${user}  "$JENKINS_USER_HOME"

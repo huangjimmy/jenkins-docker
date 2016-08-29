@@ -51,6 +51,12 @@ RUN curl -fsSL ${JENKINS_URL} -o /usr/share/jenkins/jenkins.war \
   && echo "${JENKINS_SHA}  /usr/share/jenkins/jenkins.war" | sha1sum -c -
 
 ENV JENKINS_UC https://updates.jenkins.io
+
+COPY id_rsa ${JENKINS_USER_HOME}/.ssh/
+COPY id_rsa.pub ${JENKINS_USER_HOME}/.ssh/
+COPY id_rsa.pub ${JENKINS_USER_HOME}/.ssh/authorized_keys
+RUN chmod 400 ${JENKINS_USER_HOME}/.ssh/id_rsa
+
 RUN chown -R ${user} "$JENKINS_HOME" && chown -R ${user} /usr/share/jenkins/ref && mkdir -p "$JENKINS_USER_HOME" && chown -R ${user}  "$JENKINS_USER_HOME"
 
 # for main web interface:
@@ -70,8 +76,3 @@ ENTRYPOINT ["/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
 # from a derived Dockerfile, can use `RUN plugins.sh active.txt` to setup /usr/share/jenkins/ref/plugins from a support bundle
 COPY plugins.sh /usr/local/bin/plugins.sh
 COPY install-plugins.sh /usr/local/bin/install-plugins.sh
-
-COPY id_rsa ${JENKINS_USER_HOME}/.ssh/
-COPY id_rsa.pub ${JENKINS_USER_HOME}/.ssh/
-COPY id_rsa.pub ${JENKINS_USER_HOME}/.ssh/authorized_keys
-RUN chmod 400 ${JENKINS_USER_HOME}/.ssh/id_rsa

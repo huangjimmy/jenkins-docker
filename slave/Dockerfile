@@ -17,9 +17,7 @@ RUN groupadd -g ${gid} ${group} \
 
 RUN apt-get update && apt-get upgrade && apt-get install maven gradle
 
-USER ${user}
-
 COPY id_rsa /var/jenkins_home/.ssh/
 COPY id_rsa.pub /var/jenkins_home/.ssh/
 COPY id_rsa.pub  /var/jenkins_home/.ssh/authorized_keys 
-RUN chmod 400 /var/jenkins_home/.ssh/id_rsa
+RUN  chmod 400 /var/jenkins_home/.ssh/id_rsa && chown -R ${user} /var/jenkins_home

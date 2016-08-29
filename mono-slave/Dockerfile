@@ -7,9 +7,7 @@ ARG group=jenkins
 ARG uid=1000
 ARG gid=1000
 
-USER ${user}
-
 COPY id_rsa /var/jenkins_home/.ssh/
 COPY id_rsa.pub /var/jenkins_home/.ssh/
 COPY id_rsa.pub  /var/jenkins_home/.ssh/authorized_keys 
-RUN chmod 400 /var/jenkins_home/.ssh/id_rsa
+RUN  chmod 400 /var/jenkins_home/.ssh/id_rsa && chown -R ${user} /var/jenkins_home
