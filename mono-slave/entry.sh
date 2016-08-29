@@ -1,3 +1,6 @@
 #!/bin/bash
 service ssh start
-/bin/tini -- /usr/local/bin/jenkins.sh
+while [ 1 ]
+do
+	x=1
+done
