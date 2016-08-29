@@ -2,7 +2,7 @@ FROM openjdk:8-jdk
 
 RUN apt-get update && apt-get install -y git curl zip && rm -rf /var/lib/apt/lists/*
 
-ENV JENKINS_HOME /var/jenkins_home
+ENV JENKINS_HOME /home/jenkins/jenkins_data
 ENV JENKINS_USER_HOME /home/jenkins
 ENV JENKINS_SLAVE_AGENT_PORT 50000
 
@@ -19,7 +19,7 @@ RUN groupadd -g ${gid} ${group} \
 
 # Jenkins home directory is a volume, so configuration and build history 
 # can be persisted and survive image upgrades
-VOLUME /var/jenkins_home
+VOLUME /home/jenkins/jenkins_data
 
 # `/usr/share/jenkins/ref/` contains all reference configuration we want 
 # to set on a fresh new installation. Use it to bundle additional plugins 
@@ -65,7 +65,7 @@ EXPOSE 8080
 # will be used by attached slave agents:
 EXPOSE 50000
 
-ENV COPY_REFERENCE_FILE_LOG $JENKINS_HOME/copy_reference_file.log
+ENV COPY_REFERENCE_FILE_LOG ${JENKINS_HOME}/copy_reference_file.log
 
 USER ${user}
 
