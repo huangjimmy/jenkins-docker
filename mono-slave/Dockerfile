@@ -12,4 +12,7 @@ ARG gid=1000
 COPY id_rsa /var/jenkins_home/.ssh/
 COPY id_rsa.pub /var/jenkins_home/.ssh/
 COPY id_rsa.pub  /var/jenkins_home/.ssh/authorized_keys 
+COPY entry.sh /usr/local/bin/
 RUN  chmod 400 /var/jenkins_home/.ssh/id_rsa && chown -R ${user} /var/jenkins_home
+
+ENTRYPOINT ["/bin/bash", "/usr/local/bin/entry.sh"]
