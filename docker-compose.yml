@@ -9,7 +9,7 @@ services:
      - "8080:8080"
      - "5000:5000"
     volumes:
-     - /srv/docker/jenkins/master:/var/jenkins_home
+     - /srv/docker/jenkins/master:/home/jenkins/jenkins_data
     image: jenkinsmaster:2
   androidslave:
     build: ./android-slave

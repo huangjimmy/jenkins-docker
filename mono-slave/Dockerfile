@@ -1,5 +1,7 @@
 FROM jenkinsci/jenkins:2.19
 
+USER root
+
 RUN apt-get update && apt-get upgrade && apt-get install maven mono-complete gradle && mkdir -p /var/jenkins_home/.ssh/
 
 ARG user=jenkins
