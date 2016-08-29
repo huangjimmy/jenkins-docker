@@ -58,8 +58,7 @@ COPY id_rsa.pub ${JENKINS_USER_HOME}/.ssh/
 COPY id_rsa.pub ${JENKINS_USER_HOME}/.ssh/authorized_keys
 RUN chmod 400 ${JENKINS_USER_HOME}/.ssh/id_rsa
 
-RUN mkdir -p "${JENKINS_HOME}"
-RUN chown -R ${user}:${user} "${JENKINS_HOME}" && chown -R ${user}:${user} /usr/share/jenkins/ref
+RUN chown -R ${user}:${user} /usr/share/jenkins/ref
 RUN mkdir -p "${JENKINS_USER_HOME}"
 RUN chown -R ${user}:${user}  "$JENKINS_USER_HOME"
 
@@ -73,6 +72,7 @@ ENV COPY_REFERENCE_FILE_LOG ${JENKINS_HOME}/copy_reference_file.log
 
 USER ${user}
 
+RUN mkdir -p "${JENKINS_HOME}"
 COPY jenkins-support /usr/local/bin/jenkins-support
 COPY jenkins.sh /usr/local/bin/jenkins.sh
 ENTRYPOINT ["/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
