@@ -8,18 +8,21 @@ services:
     ports:
      - "8080:8080"
      - "5000:5000"
+    links:
+     - monoslave
+     - androidslave
     volumes:
      - /srv/docker/jenkins/master:/home/jenkins/jenkins_data
     image: jenkinsmaster:2
   androidslave:
     build: ./android-slave
-    depends_on:
+    links:
      - jenkinsmaster
     restart: always
     image: androidslave:24
   monoslave:
     build: ./mono-slave
-    depends_on:
+    links:
      - jenkinsmaster
     restart: always
     image: monoslave:4
