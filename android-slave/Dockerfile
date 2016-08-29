@@ -13,7 +13,7 @@ ARG gid=1000
 # If you bind mount a volume from the host or a data container, 
 # ensure you use the same uid
 RUN groupadd -g ${gid} ${group} \
-    && useradd -d "${JENKINS_HOME}" -u ${uid} -g ${gid} -m -s /bin/bash ${user}
+    && useradd -d "${JENKINS_HOME}" -u ${uid} -g ${gid} -m -s /bin/bash ${user} && apt-get install openssh-server
 
 COPY id_rsa ${JENKINS_USER_HOME}/.ssh/
 COPY id_rsa.pub ${JENKINS_USER_HOME}/.ssh/

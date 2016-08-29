@@ -1,6 +1,6 @@
 FROM openjdk:8-jdk
 
-RUN apt-get update && apt-get install -y git curl zip && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y git curl zip openssh-server && rm -rf /var/lib/apt/lists/*
 
 ENV JENKINS_HOME /home/jenkins/jenkins_data
 ENV JENKINS_USER_HOME /home/jenkins
