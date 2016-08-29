@@ -58,7 +58,10 @@ COPY id_rsa.pub ${JENKINS_USER_HOME}/.ssh/
 COPY id_rsa.pub ${JENKINS_USER_HOME}/.ssh/authorized_keys
 RUN chmod 400 ${JENKINS_USER_HOME}/.ssh/id_rsa
 
-RUN mkdir -p "${JENKINS_HOME}" && chown -R ${user}:${user} "${JENKINS_HOME}" && chown -R ${user}:${user} /usr/share/jenkins/ref && mkdir -p "${JENKINS_USER_HOME}" && chown -R ${user}:${user}  "$JENKINS_USER_HOME"
+RUN mkdir -p "${JENKINS_HOME}"
+RUN chown -R ${user}:${user} "${JENKINS_HOME}" && chown -R ${user}:${user} /usr/share/jenkins/ref
+RUN mkdir -p "${JENKINS_USER_HOME}"
+RUN chown -R ${user}:${user}  "$JENKINS_USER_HOME"
 
 # for main web interface:
 EXPOSE 8080
