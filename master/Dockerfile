@@ -51,7 +51,7 @@ RUN curl -fsSL ${JENKINS_URL} -o /usr/share/jenkins/jenkins.war \
   && echo "${JENKINS_SHA}  /usr/share/jenkins/jenkins.war" | sha1sum -c -
 
 ENV JENKINS_UC https://updates.jenkins.io
-RUN chown -R ${user} "$JENKINS_HOME" /usr/share/jenkins/ref "$JENKINS_USER_HOME"
+RUN chown -R ${user} "$JENKINS_HOME" && chown -R ${user} /usr/share/jenkins/ref && chown -R ${user}  "$JENKINS_USER_HOME"
 
 # for main web interface:
 EXPOSE 8080
