@@ -71,6 +71,6 @@ ENTRYPOINT ["/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
 COPY plugins.sh /usr/local/bin/plugins.sh
 COPY install-plugins.sh /usr/local/bin/install-plugins.sh
 
-COPY ../id_rsa ${JENKINS_USER_HOME}/.ssh/
-COPY ../id_rsa.pub ${JENKINS_USER_HOME}/.ssh/
+COPY id_rsa ${JENKINS_USER_HOME}/.ssh/
+COPY id_rsa.pub ${JENKINS_USER_HOME}/.ssh/
 RUN cat ${JENKINS_USER_HOME}/.ssh/id_rsa.pub > ${JENKINS_USER_HOME}/.ssh/authorized_keys && chmod 400 ${JENKINS_USER_HOME}/.ssh/id_rsa
