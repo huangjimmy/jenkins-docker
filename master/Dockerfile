@@ -51,14 +51,6 @@ RUN curl -fsSL ${JENKINS_URL} -o /usr/share/jenkins/jenkins.war \
   && echo "${JENKINS_SHA}  /usr/share/jenkins/jenkins.war" | sha1sum -c -
 
 ENV JENKINS_UC https://updates.jenkins.io
-
-COPY id_rsa ${JENKINS_USER_HOME}/.ssh/
-COPY id_rsa.pub ${JENKINS_USER_HOME}/.ssh/
-COPY id_rsa.pub ${JENKINS_USER_HOME}/.ssh/authorized_keys
-RUN chmod 400 ${JENKINS_USER_HOME}/.ssh/id_rsa
-
-RUN mkdir -p "${JENKINS_HOME}" && chown -R ${user}:${user} "${JENKINS_HOME}" && chown -R ${user}:${user} /usr/share/jenkins/ref && mkdir -p "${JENKINS_USER_HOME}" && chown -R ${user}:${user}  "$JENKINS_USER_HOME"
-
 # for main web interface:
 EXPOSE 8080
 
@@ -68,6 +60,14 @@ EXPOSE 50000
 ENV COPY_REFERENCE_FILE_LOG ${JENKINS_HOME}/copy_reference_file.log
 
 USER ${user}
+
+COPY id_rsa ${JENKINS_USER_HOME}/.ssh/
+COPY id_rsa.pub ${JENKINS_USER_HOME}/.ssh/
+COPY id_rsa.pub ${JENKINS_USER_HOME}/.ssh/authorized_keys
+RUN chmod 400 ${JENKINS_USER_HOME}/.ssh/id_rsa
+
+RUN mkdir -p "${JENKINS_HOME}" && chown -R ${user}:${user} "${JENKINS_HOME}" && chown -R ${user}:${user} /usr/share/jenkins/ref && mkdir -p "${JENKINS_USER_HOME}" && chown -R ${user}:${user}  "$JENKINS_USER_HOME"
+
 
 COPY jenkins-support /usr/local/bin/jenkins-support
 COPY jenkins.sh /usr/local/bin/jenkins.sh
