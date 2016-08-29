@@ -17,10 +17,6 @@ ARG gid=1000
 RUN groupadd -g ${gid} ${group} \
     && useradd -d "$JENKINS_USER_HOME" -u ${uid} -g ${gid} -m -s /bin/bash ${user}
 
-# Jenkins home directory is a volume, so configuration and build history 
-# can be persisted and survive image upgrades
-VOLUME /home/jenkins/jenkins_data
-
 # `/usr/share/jenkins/ref/` contains all reference configuration we want 
 # to set on a fresh new installation. Use it to bundle additional plugins 
 # or config file with your custom jenkins Docker image.
@@ -59,8 +55,11 @@ COPY id_rsa.pub ${JENKINS_USER_HOME}/.ssh/authorized_keys
 RUN chmod 400 ${JENKINS_USER_HOME}/.ssh/id_rsa
 
 RUN chown -R ${user}:${user} /usr/share/jenkins/ref
-RUN mkdir -p "${JENKINS_USER_HOME}"
-RUN chown -R ${user}:${user}  "$JENKINS_USER_HOME"
+RUN mkdir -p "${JENKINS_HOME}" && chown -R ${user}:${user}  "$JENKINS_HOME" && mkdir -p "${JENKINS_USER_HOME}" && chown -R ${user}:${user}  "$JENKINS_USER_HOME"
+
+# Jenkins home directory is a volume, so configuration and build history 
+# can be persisted and survive image upgrades
+VOLUME /home/jenkins/jenkins_data
 
 # for main web interface:
 EXPOSE 8080
@@ -72,7 +71,6 @@ ENV COPY_REFERENCE_FILE_LOG ${JENKINS_HOME}/copy_reference_file.log
 
 USER ${user}
 
-RUN mkdir -p "${JENKINS_HOME}"
 COPY jenkins-support /usr/local/bin/jenkins-support
 COPY jenkins.sh /usr/local/bin/jenkins.sh
 ENTRYPOINT ["/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
