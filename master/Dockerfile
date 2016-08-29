@@ -56,6 +56,7 @@ RUN chmod 400 ${JENKINS_USER_HOME}/.ssh/id_rsa
 
 RUN chown -R ${user}:${user} /usr/share/jenkins/ref
 RUN mkdir -p "${JENKINS_HOME}" && chown -R ${user}:${user}  "$JENKINS_HOME" && mkdir -p "${JENKINS_USER_HOME}" && chown -R ${user}:${user}  "$JENKINS_USER_HOME"
+RUN echo "StrictHostKeyChecking no" > /etc/ssh/ssh_config && echo "UserKnownHostsFile /dev/null" > /etc/ssh/ssh_config
 
 # Jenkins home directory is a volume, so configuration and build history 
 # can be persisted and survive image upgrades
