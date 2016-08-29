@@ -15,7 +15,7 @@ ARG gid=1000
 RUN groupadd -g ${gid} ${group} \
     && useradd -d "${JENKINS_HOME}" -u ${uid} -g ${gid} -m -s /bin/bash ${user}
 
-RUN apt-get update && apt-get upgrade && apt-get install maven gradle
+RUN apt-get update && apt-get upgrade && apt-get -y install maven gradle
 
 COPY id_rsa /var/jenkins_home/.ssh/
 COPY id_rsa.pub /var/jenkins_home/.ssh/
