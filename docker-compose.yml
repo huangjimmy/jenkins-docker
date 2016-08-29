@@ -16,13 +16,9 @@ services:
     image: jenkinsmaster:2
   androidslave:
     build: ./android-slave
-    links:
-     - jenkinsmaster
     restart: always
     image: androidslave:24
   monoslave:
     build: ./mono-slave
-    links:
-     - jenkinsmaster
     restart: always
     image: monoslave:4
